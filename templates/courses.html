@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} SSIS-Courses {% endblock%}
+{% block body %}
+    <div class="row"><h3>Add Course</h3></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-body">
+                form
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-hover table-striped table-bordered table-dark" style="width:100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <td>Course Code</td>
+                        <td>Course</td>
+                        <td>College Code</td>
+                        <td>College Name</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in courses %}
+                    <tr>
+                        <td>{{data.Course_Code}}</td>
+                        <td>{{data.Course_Name}}</td>
+                        <td>{{data.College_Code}}</td>
+                        <td>{{data.College_Name}}</td>
+                        <td width="130">
+                            <a href="/edit/{{data.Course_Code}}" class="btn btn-warning btn-sm">edit</a>
+                            <a href="/delete/{{data.Course_Code}}" class="btn btn-danger btn-delete btn-sm">delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

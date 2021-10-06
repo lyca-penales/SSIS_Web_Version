@@ -1,6 +1,57 @@
-from website import create_ssis
+from flask import Flask, render_template
+from flaskext.mysql import MySQL
+import pymysql
 
-ssis = create_ssis()
+app = Flask(__name__)
+app.secret_key = "Web-SSIS"
 
-if __name__ == '__main__':
-    ssis.run(debug = True)
+mysql = MySQL()
+
+#MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_DB'] = 'ssis_db'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+
+conn = mysql.connect()
+cur = conn.cursor(pymysql.cursors.DictCursor)
+
+@app.route('/ssis_home')
+def ssis_home():
+    return render_template('ssis_home.html')
+
+@app.route('/students')
+def students():
+    cur.execute("""
+                SELECT s.Student_Id, s.Firstname, s.Lastname, s.Gender, s.Year_Level, s.Course_Code
+                FROM student s
+                JOIN courses c ON s.Course_Code = c.Course_Code
+                ORDER BY s.Student_Id DESC
+                """)
+    data = cur.fetchall()
+    #cur.close()
+    return render_template('students.html', student = data)
+
+@app.route('/courses')
+def courses():
+    cur.execute("""
+                SELECT a.Course_Code, a.Course_Name, a.College_Code, c.College_Name
+                FROM courses a
+                JOIN college c ON a.College_Code = c.College_Code
+                ORDER BY a.Course_Code DESC 
+                """)
+    data = cur.fetchall()
+    #cur.close()
+    return render_template('courses.html', courses = data)
+
+@app.route('/colleges')
+def colleges():
+    cur.execute('SELECT * FROM college')
+    data = cur.fetchall()
+    #cur.close()
+    return render_template('colleges.html', college = data)
+
+#starting the app
+if __name__ == "__main__":
+    app.run(port=3000, debug=True)

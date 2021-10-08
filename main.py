@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flaskext.mysql import MySQL
 import pymysql
 
@@ -51,6 +51,19 @@ def colleges():
     data = cur.fetchall()
     #cur.close()
     return render_template('colleges.html', college = data)
+
+@app.route('/add_college', methods=['POST'])
+def add_college():
+    if request.method == 'POST':
+        College_Code = request.form['college_code']
+        College_Name = request.form['college_name']
+        cur.execute("""
+                    INSERT INTO college (College_Code, College_Name)
+                    VALUES (%s, %s, %s), (college_code, college_name)
+                    """)
+        conn.commit()
+        flash('Student Added Successfully')
+        return redirect(url_for('colleges'))
 
 #starting the app
 if __name__ == "__main__":

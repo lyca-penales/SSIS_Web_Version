@@ -2,39 +2,78 @@
 
 {% block title %} SSIS-Courses {% endblock%}
 {% block body %}
-    <div class="row"><h3>Add Course</h3></div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card card-body">
-                form
+    <div class="py-0 my-0 bg-white text-dark" style="height: 40px;">
+        <p class="text-center font-weight-bold h3">
+            MSU-IIT Courses
+        </p>
+    </div>
+
+    <div class="align-middle">
+        <div class="card card-body card-center my-1 py-2 mx-1 px-2">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning px-0 mx-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Add New Course Information
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="col-md-12">
+                    <div class="card card-body">
+                        <form action="" method="POST">
+                            <p class="text-left font-weight-bold h5">
+                                Add Course
+                            </p>
+                            <div class="form-group from-dark">
+                                <label for="ExampleInputCollegeCode">Course Code</label>
+                                <input type="text" class="form-control" name="Course Code" placeholder="Enter Course Code">
+                            </div>
+                            <div class="form-group">
+                                <label for="ExampleInputCollegeName">Course Name</label>
+                                <input type="text" class="form-control" name="Course Name" placeholder="Enter Course Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="ExampleInputCollegeName">College Code</label>
+                                <input type="text" class="form-control" name="College Code" placeholder="Enter College Code">
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-warning">Add</button>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <table class="table table-hover table-striped table-bordered table-dark" style="width:100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <td>Course Code</td>
-                        <td>Course</td>
-                        <td>College Code</td>
-                        <td>College Name</td>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in courses %}
-                    <tr>
-                        <td>{{data.Course_Code}}</td>
-                        <td>{{data.Course_Name}}</td>
-                        <td>{{data.College_Code}}</td>
-                        <td>{{data.College_Name}}</td>
-                        <td width="130">
-                            <a href="/edit/{{data.Course_Code}}" class="btn btn-warning btn-sm">edit</a>
-                            <a href="/delete/{{data.Course_Code}}" class="btn btn-danger btn-delete btn-sm">delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    </div>
+    
+    <div class="align-middle">
+        <table class="table table-hover table-striped table-bordered table-dark" style="width:100%">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Course Code</td>
+                    <td>Course</td>
+                    <td>College Code</td>
+                    <td>College Name</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in courses %}
+                <tr>
+                    <td>{{data.Course_Code}}</td>
+                    <td>{{data.Course_Name}}</td>
+                    <td>{{data.College_Code}}</td>
+                    <td>{{data.College_Name}}</td>
+                    <td width="130">
+                        <a href="/edit/{{data.Course_Code}}" class="btn btn-warning btn-sm">edit</a>
+                        <a href="/delete/{{data.Course_Code}}" class="btn btn-danger btn-delete btn-sm">delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

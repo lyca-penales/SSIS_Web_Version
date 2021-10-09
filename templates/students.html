@@ -14,19 +14,35 @@
             <button type="button" class="btn btn-warning px-0 mx-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Add New Student Information
             </button>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages%}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">
+                        x
+                    </span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="col-md-12">
                     <div class="card card-body">
-                        <form action="" method="POST">
+                        <form action="{{url_for('add_student')}}" method="POST">
                             <p class="text-left font-weight-bold h5">
                                 Add Student
                             </p>
                             <div class="form-group from-dark">
                                 <label for="ExampleInputCollegeCode">Student Id</label>
-                                <input type="text" class="form-control" name="Student Id" placeholder="Enter Student Id e.g. yyyy-nnnn">
+                                <input type="text" class="form-control" name="Student_Id" placeholder="Enter Student Id e.g. yyyy-nnnn">
                             </div>
                             <div class="form-group">
                                 <label for="ExampleInputCollegeName">Firstname</label>
@@ -42,18 +58,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="ExampleInputCollegeName">Year Level</label>
-                                <input type="text" class="form-control" name="Year Level" placeholder="Enter Year Level">
+                                <input type="text" class="form-control" name="Year_Level" placeholder="Enter Year Level">
                             </div>
                             <div class="form-group">
                                 <label for="ExampleInputCollegeName">Course Code</label>
-                                <input type="text" class="form-control" name="Course Code" placeholder="Enter Course Code">
+                                <input type="text" class="form-control" name="Course_Code" placeholder="Enter Course Code">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-warning">Add</button>
                             </div>
                         </form>
                     </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-warning">Add</button>
                     </div>
                 </div>
                 </div>

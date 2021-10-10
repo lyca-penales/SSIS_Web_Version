@@ -1,0 +1,16 @@
+<script src="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.foundation.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+            $(document).ready(function() {
+                $('#college_t').DataTable( {
+                    "alengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
+                    "iDisplayLength": 3
+                } );
+            } );
+        </script>

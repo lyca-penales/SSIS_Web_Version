@@ -48,7 +48,7 @@ def add_student():
         cur.execute('''INSERT INTO student
                     VALUES (%s, %s, %s, %s, %s, %s)''', (Student_Id, Firstname, Lastname, Gender, Year_Level, Course_Code))
         conn.commit()
-        flash('Student Added Successfully')
+        flash('Student Added Successfully!')
         return redirect(url_for('students'))
 
 #Edit Student
@@ -77,9 +77,18 @@ def update_student(Student_Id):
                         Course_Code = %s
                     WHERE Student_Id = %s
                     """, (Firstname, Lastname, Gender, Year_Level, Course_Code, Student_Id))
-        flash('Student Updated Successfully!!!')
+        flash('Student Updated Successfully!')
         conn.commit()
         return redirect(url_for('students'))
+
+#Delete Student
+@app.route('/delete/student/<Student_Id>', methods=['POST', 'GET'])
+def delete_student(Student_Id):
+    cur.execute('DELETE FROM student WHERE Student_Id = %s', (Student_Id))  
+    conn.commit
+    flash('Student Removed Successfully!')
+    return redirect(url_for('students'))
+
 
 #----------COURSE----------#
 #Display Course
@@ -104,7 +113,7 @@ def add_course():
         cur.execute('''INSERT INTO courses 
                     VALUES (%s, %s, %s)''', (Course_Code, Course_Name, College_Code))
         conn.commit()
-        flash('Course Added Successfully')
+        flash('Course Added Successfully!')
         return redirect(url_for('courses'))
 
 #Edit Course
@@ -127,9 +136,18 @@ def update_course(Course_Code):
                         College_Code = %s
                     WHERE Course_Code = %s
                     """, (Course_Name, College_Code, Course_Code))
-        flash('Course Updated Successfully!!!')
+        flash('Course Updated Successfully!')
         conn.commit()
         return redirect(url_for('courses'))
+
+#Delete Course
+@app.route('/delete/course/<Course_Code>', methods=['POST', 'GET'])
+def delete_course(Course_Code):
+    cur.execute('DELETE FROM courses WHERE Course_Code = %s', (Course_Code))  
+    conn.commit
+    flash('Course Removed Successfully!')
+    return redirect(url_for('courses'))
+
 
 #----------COLLEGE----------#
 #Display College
@@ -148,7 +166,7 @@ def add_college():
         College_Name = request.form['college_name']
         cur.execute('''INSERT INTO college VALUES (%s, %s)''', (College_Code, College_Name))
         conn.commit()
-        flash('College Added Successfully')
+        flash('College Added Successfully!')
         return redirect(url_for('colleges'))
 
 #Edit College
@@ -169,9 +187,17 @@ def update_college(College_Code):
                     SET College_Name = %s
                     WHERE College_Code = %s
                     """, (College_Name, College_Code))
-        flash('College Updated Successfully!!!')
+        flash('College Updated Successfully!')
         conn.commit()
         return redirect(url_for('colleges'))
+
+#Delete College
+@app.route('/delete/college/<College_Code>', methods=['POST', 'GET'])
+def delete_college(College_Code):
+    cur.execute('DELETE FROM college WHERE College_Code = %s', (College_Code))  
+    conn.commit
+    flash('College Removed Successfully!')
+    return redirect(url_for('colleges'))
 
 #starting the app
 if __name__ == "__main__":

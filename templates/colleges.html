@@ -15,21 +15,6 @@
                 Add New College Information
             </button>
 
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages%}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">
-                        x
-                    </span>
-                </button>
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-            
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -58,6 +43,7 @@
                 </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -76,7 +62,7 @@
                     <td>{{data.College_Code}}</td>
                     <td>{{data.College_Name}}</td>
                     <td width="130">
-                        <a href="/edit/{{data.College_Code}}" class="btn btn-warning btn-sm">edit</a>
+                        <a href="/edit/college/{{data.College_Code}}" class="btn btn-warning btn-sm">edit</a>
                         <a href="/delete/{{data.College_Code}}" class="btn btn-danger btn-delete btn-sm">delete</a>
                     </td>
                 </tr>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} SSIS-Edit-College-{{college.College_Code}}{% endblock%}
+{% block body%}
+    <div class="pb-3 mb-3 bg-white text-dark" style="height: 40px;">
+        <p class="text-center font-weight-bold h3">
+            MSU-IIT Colleges
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card card-body">
+                <form action="/update/college/{{college.College_Code}}" method="POST">
+                    <p class="text-left font-weight-bold h5">
+                        Update College
+                    </p>
+                    <div class="form-group">
+                        <label for="ExampleInputCollegeCode">College Code</label>
+                        <input type="text" readonly class="form-control" name="College_Code" value="{{college.College_Code}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="ExampleInputCollegeName">College Name</label>
+                        <input type="text" class="form-control" name="College_Name" value="{{college.College_Name}}">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-warning btn-block">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

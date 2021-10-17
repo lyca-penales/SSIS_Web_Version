@@ -17,7 +17,7 @@ mysql.init_app(app)
 conn = mysql.connect()
 cur = conn.cursor(pymysql.cursors.DictCursor)
 
-@app.route('/ssis_home')
+@app.route('/')
 def ssis_home():
     return render_template('ssis_home.html')
 
@@ -89,13 +89,90 @@ def delete_student(Student_Id):
     flash('Student Removed Successfully!')
     return redirect(url_for('students'))
 
+#Search Student by Fields
+@app.route('/student/search', methods=['GET', 'POST'])
+def search_student():
+    if request.method == 'POST':
+        u_input = request.form.get('u_search')
+        field = request.form.get('search_select')
+
+        if field == 'student_id':
+            cur.execute('SELECT * FROM student WHERE Student_Id = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'firstname':
+            cur.execute('SELECT * FROM student WHERE Firstname = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'lastname':
+            cur.execute('SELECT * FROM student WHERE Lastname = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'gender':
+            cur.execute('SELECT * FROM student WHERE Gender = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'year_level':
+            cur.execute('SELECT * FROM student WHERE Year_Level = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'year_level':
+            cur.execute('SELECT * FROM student WHERE Year_Level = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        elif field == 'course_code':
+            cur.execute('SELECT * FROM student WHERE Course_Code = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
+        else:
+            cur.execute('''SELECT * FROM student 
+                        WHERE  Student_Id = %s OR 
+                               Firstname = %s OR
+                               Lastname = %s OR
+                               Gender = %s OR
+                               Year_Level = %s OR  
+                               Course_Code = %s''', (u_input, u_input, u_input, u_input, u_input, u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('students.html', student = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('students'))
 
 #----------COURSE----------#
 #Display Course
 @app.route('/courses')
 def courses():
     cur.execute("""
-                SELECT a.Course_Code, a.Course_Name, a.College_Code, c.College_Name
+                SELECT a.Course_Code, a.Course_Name, a.College_Code
                 FROM courses a
                 JOIN college c ON a.College_Code = c.College_Code
                 ORDER BY a.Course_Code DESC 
@@ -148,14 +225,52 @@ def delete_course(Course_Code):
     flash('Course Removed Successfully!')
     return redirect(url_for('courses'))
 
+#Search Course by Fields
+@app.route('/course/search', methods=['GET', 'POST'])
+def search_course():
+    if request.method == 'POST':
+        u_input = request.form.get('u_search')
+        field = request.form.get('search_select')
 
+        if field == 'course_code':
+            cur.execute('SELECT * FROM courses WHERE Course_Code = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('courses.html', courses = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('courses'))
+        elif field == 'course_name':
+            cur.execute('SELECT * FROM courses WHERE Course_Name = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('courses.html', courses = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('courses'))
+        elif field == 'college_code':
+            cur.execute('SELECT * FROM courses WHERE College_Code = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('courses.html', courses = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('courses'))
+        else:
+            cur.execute('SELECT * FROM courses WHERE Course_Code = %s OR Course_Name = %s OR  College_Code = %s', (u_input, u_input, u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('courses.html', courses = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('courses'))
+        
 #----------COLLEGE----------#
 #Display College
 @app.route('/colleges')
 def colleges():
     cur.execute('SELECT * FROM college')
     data = cur.fetchall()
-    #cur.close()
     return render_template('colleges.html', college = data)
 
 #Add College
@@ -198,6 +313,38 @@ def delete_college(College_Code):
     conn.commit
     flash('College Removed Successfully!')
     return redirect(url_for('colleges'))
+
+#Search College by Fields
+@app.route('/college/search', methods=['GET', 'POST'])
+def search_college():
+    if request.method == 'POST':
+        u_input = request.form.get('u_search')
+        field = request.form.get('search_select')
+
+        if field == 'college_code':
+            cur.execute('SELECT * FROM college WHERE College_Code = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('colleges.html', college = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('colleges'))
+        elif field == 'college_name':
+            cur.execute('SELECT * FROM college WHERE College_Name = %s', (u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('colleges.html', college = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('colleges'))
+        else:
+            cur.execute('SELECT * FROM college WHERE College_Code = %s OR College_Name = %s', (u_input, u_input))
+            data = cur.fetchall()
+            for u_input in data:
+                return render_template('colleges.html', college = data)
+            else:
+                flash('Sorry, no data found. Please try again.')
+                return redirect(url_for('colleges'))
 
 #starting the app
 if __name__ == "__main__":

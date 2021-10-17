@@ -2,49 +2,81 @@
 
 {% block title %} SSIS-Colleges {% endblock%}
 {% block body %}
-    <div class="py-0 my-0 bg-white text-dark" style="height: 40px;">
-        <p class="text-center font-weight-bold h3">
+    <div class="py-0 my-0 bg-white text-dark">
+        <p class="text-center font-weight-bold h1">
             MSU-IIT Colleges
         </p>
     </div>
-
+    
     <div class="align-middle">
-        <div class="card card-body card-center my-1 py-2 mx-1 px-2">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-warning px-0 mx-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Add New College Information
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="col-md-12">
-                        <div class="card card-body">
-                            <form action="{{url_for('add_college')}}" method="POST">
-                                <p class="text-left font-weight-bold h5">
-                                    Add College
-                                </p>
-                                <div class="form-group from-dark">
-                                    <label for="ExampleInputCollegeCode">College Code</label>
-                                    <input type="text" class="form-control" name="college_code" placeholder="Enter College Code">
-                                </div>
-                                <div class="form-group">
-                                    <label for="ExampleInputCollegeName">College Name</label>
-                                    <input type="text" class="form-control" name="college_name" placeholder="Enter College Name">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-warning submitBtn" onclick="return confirm('Are you sure you want to add this college on the list?')">Add</button>
-                                </div>
-                            </form>
-                        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-md-12">
+                    <div class="card card-body">
+                        <form action="{{url_for('add_college')}}" method="POST">
+                            <p class="text-left font-weight-bold h5">
+                                Add College
+                            </p>
+                            <div class="form-group from-dark">
+                                <label for="ExampleInputCollegeCode">College Code</label>
+                                <input type="text" class="form-control" name="college_code" placeholder="Enter College Code">
+                            </div>
+                            <div class="form-group">
+                                <label for="ExampleInputCollegeName">College Name</label>
+                                <input type="text" class="form-control" name="college_name" placeholder="Enter College Name">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-warning submitBtn" onclick="return confirm('Are you sure you want to add this college on the list?')">Add</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="py-0 my-0 bg-white text-dark">
+        <p class="font-weight-normal h6">
+            Select Field to Search
+        </p>
+    </div>
+    <div class="search">
+        <form action="{{url_for('search_college')}}" method="POST" class="form-inline">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <select id="search_select" name="search_select" class="form-select h6">
+                        <option value="general">General Search</option>
+                        <option value="college_code">College Code</option>
+                        <option value="college_name">College Name</option>
+                    </select>
+                </div>
+                <input id="u_search" class="searchfield h6" type="text" name="u_search" placeholder="Search College">
+                <div class="input-group-append">
+                    <button class="btn btn-warning btn-outline-dark btn-search font-weight-bold h2" type="submit">
+                        Search
+                    </button>
                 </div>
             </div>
 
-        </div>
+            <div class="bg-white text-white">
+                <p>whitespacetofillbetweenbuttonsforposition</p>
+            </div>
+            
+            <div class="btn-group">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-dark btn-warning font-weight-bold h2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Add New College Information
+                </button>
+                <a href="{{ url_for('colleges') }}" class="btn btn-outline-dark btn-warning font-weight-bold h2">
+                    Display Colleges
+                </a>
+            </div>
+        </form>
     </div>
 
     <div class="align-middle">
@@ -70,5 +102,15 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#college_t').DataTable({
+                "alengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
+                "iDisplayLength": 3
+                }
+            );
+        });
+    </script>
 
 {% endblock %}

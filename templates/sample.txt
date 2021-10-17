@@ -14,3 +14,54 @@
                 } );
             } );
         </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"/>
+<label>Select Student Field to Search</label>
+        <select name="Student_Field" id="Student_Field" class="form-control" title="Select Field">
+            <option value="1">Student Id</option>
+        </select>
+
+<script src="https://cdnjs.cloudfare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#Student_Field").selectpicker();
+            })
+        </script>
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <label>Select Field</label>
+                <select name="Student_Field" id="Student_Field" class="form-control select-dark" title="Select College Field to Search">
+                    <option value="1">College Code</option>
+                    <option value="2">College Name</option>
+                </select>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+#College Search
+@app.route('/search/college', methods=['POST'])
+def search_college():
+    if request.method == "POST":
+        searches = request.form['search']
+        cur.execute('SELECT * FROM college WHERE College_Code = %s', request.form['search'])
+        data = cur.fetchall()
+        for c in data:
+            return redirect(url_for('search_college'))
+    return render_template('colleges.html', college = data)
+
+<div class="search">
+        <form action="{{url_for('search_college')}}" method="POST" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search College">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+
+

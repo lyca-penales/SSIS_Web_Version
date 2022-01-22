@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% from "bootstrap/form.html" import render_form_row %}
+{% from "bootstrap/utils.html" import render_messages %}
+
+{% block title %}SSIS-Courses{% endblock%}
+
+{% block styles %}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="p-2 mb-0 bg-dark text-dark"></div> 
+        <div class="py-1 mb-0 bg-warning text-dark" style="height: 30px;">
+            <p class="text-center font-monospace h6">
+                Mindanao State University - Iligan Institute of Technology
+            </p>
+        </div>
+        
+        <div class="py-2 mb-0 bg-danger text-white" style="height: 40px;">
+            <p class="text-center font-weight-bold h5">
+                Simple Student Management System
+            </p>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">SSIS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Students</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/ssis-courses">Courses<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/ssis-colleges">Colleges</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <br/>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages%}
+        <div class="alert alert-dismissible fade show bg-info" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    x
+                </span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <br/>
+    <div class="py-0 my-0 bg-white text-dark">
+        <p class="text-center font-weight-bold h1">
+            MSU-IIT Courses
+        </p>
+    </div>
+
+    <div class="align-middle">
+        <!-- Modal For Add Course-->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-md-12">
+                <div class="card card-body">
+                    <form action="{{url_for('main.add_course')}}" method="POST">
+                        <p class="text-left font-weight-bold h5">
+                            Add Course
+                        </p>
+                        <div class="form-group from-dark">
+                            <label for="ExampleInputCourseCode">Course Code</label>
+                            <input type="text" class="form-control" name="Course_Code" placeholder="Enter Course Code">
+                        </div>
+                        <div class="form-group">
+                            <label for="ExampleInputCourseName">Course Name</label>
+                            <input type="text" class="form-control" name="Course_Name" placeholder="Enter Course Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="ExampleInputCollegeCode">College Code</label>
+                            <input type="text" class="form-control" name="College_Code" placeholder="Enter College Code">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to add this course on the list?')">Add</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    <div class="px-5 py-0 my-0 bg-white text-dark">
+        <p class="font-weight-normal h6">
+            Select Field to Search
+        </p>
+    </div>
+    <div class="search">
+        <form action="{{url_for('main.search_course')}}" method="POST" class="form-inline">
+            <div class="input-group px-5">
+                <div class="input-group-prepend">
+                    <select id="search_select" name="search_select" class="form-select h6">
+                        <option value="general">General Search</option>
+                        <option value="course_code">Course Code</option>
+                        <option value="course_name">Course Name</option>
+                        <option value="college_code">College Code</option>
+                    </select>
+                </div>
+                <input id="u_search" class="searchfield h6" type="text" name="u_search" placeholder="Search College">
+                <div class="input-group-append">
+                    <button class="btn btn-warning btn-outline-dark btn-search font-weight-bold h2" type="submit">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white text-white">
+                <p>white spacetofillbetweenbuttonsforpositions</p>
+            </div>
+            
+            <div class="btn-group">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-dark btn-warning font-weight-bold h2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Add New Course Information
+                </button>
+                <a href="{{ url_for('main.courses') }}" class="btn btn-outline-dark btn-warning font-weight-bold h2">
+                    Display Courses
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="align-middle px-5">
+        <table class="table table-hover table-striped table-bordered table-dark" style="width:100%">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Course Code</td>
+                    <td>Course Name</td>
+                    <td>College Code</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in courses %}
+                <tr>
+                    <td>{{data.Course_Code}}</td>
+                    <td>{{data.Course_Name}}</td>
+                    <td>{{data.College_Code}}</td>
+                    <td width="130">
+                        <a href="/edit/course/{{data.Course_Code}}" class="btn btn-primary btn-sm">edit</a>
+                        <a href="/delete/course/{{data.Course_Code}}" class="btn btn-danger btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this course on the list?')">delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

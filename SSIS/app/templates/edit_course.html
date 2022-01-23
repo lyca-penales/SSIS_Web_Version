@@ -86,7 +86,7 @@
             <div class="card card-body">
                 <form action="/update/course/{{courses.Course_Code}}" method="POST">
                     <p class="text-left font-weight-bold h5">
-                        Update Course
+                        Edit Course
                     </p>
                     <div class="form-group">
                         <label for="ExampleInputCollegeCode">Course Code</label>
@@ -97,8 +97,20 @@
                         <input type="text" class="form-control" name="Course_Name" value="{{courses.Course_Name}}">
                     </div>
                     <div class="form-group">
-                        <label for="ExampleInputCollegeName">College Code</label>
-                        <input type="text" class="form-control" name="College_Code" value="{{courses.College_Code}}">
+                        <div class="card card-body">
+                            <p>College Code: {{courses.College_Code}}</p>
+                            <label for="ExampleInputCollegeCode">Select College Code</label>
+                            <select id="College_Code" name="College_Code" class="form-select h6">
+                                <option type="text" name="College_Code"></option>
+                                {% for college_codes in college %}
+                                    <option type="text" name="College_Code">{{college_codes.College_Code}}</option>
+                                {% endfor %}
+                            </select>
+                            <p class="text-center font-monospace text-info h6">
+                                If college code not on list, means college does not exist.
+                                Add college information first on 'Colleges', then come back here to add course.
+                            </p>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" onclick="return confirm('Are you sure you want to update this course information on the list?')">Update</button>

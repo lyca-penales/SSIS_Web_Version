@@ -86,7 +86,7 @@
             <div class="card card-body">
                 <form action="/update/student/{{student.Student_Id}}" enctype="multipart/form-data" method="POST">
                     <p class="text-left font-weight-bold h5">
-                        Edit Student
+                        Edit Student Information
                     </p>
                     <div class="form-group">
                         <label for="ExampleInputCollegeCode">Student Id</label>
@@ -111,12 +111,34 @@
                         <input type="text" class="form-control" name="Gender" value="{{student.Gender}}">
                     </div>
                     <div class="form-group">
-                        <label for="ExampleInputCollegeName">Year Level</label>
-                        <input type="text" class="form-control" name="Year_Level" value="{{student.Year_Level}}">
+                        <div class="card card-body">
+                            <p>Year Level: {{student.Year_Level}}</p>
+                            <label for="ExampleInputYearLevel">Select Year Level</label>
+                            <select id="Year_Level" name="Year_Level" class="form-select h6">
+                                <option type="text" name="Year_Level"></option>
+                                <option type="text" name="Year_Level">1st Year</option>
+                                <option type="text" name="Year_Level">2nd Year</option>
+                                <option type="text" name="Year_Level">3rd Year</option>
+                                <option type="text" name="Year_Level">4th Year</option>
+                                <option type="text" name="Year_Level">5th Year</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="ExampleInputCollegeName">Course Code</label>
-                        <input type="text" class="form-control" name="Course_Code" value="{{student.Course_Code}}">
+                        <div class="card card-body">
+                            <p>Course Code: {{student.Course_Code}}</p>
+                            <label for="ExampleInputCourseCode">Select Course Code</label>
+                            <select id="Course_Code" name="Course_Code" class="form-select h6">
+                                <option type="text" name="Course_Code"></option>
+                                {% for course_codes in courses %}
+                                    <option type="text" name="College_Code">{{course_codes.Course_Code}}</option>
+                                {% endfor %}
+                            </select>
+                            <p class="text-center font-monospace text-info h6">
+                                If course code not on list, means course does not exist.
+                                Add course information first on 'Courses', then come back here to add student.
+                            </p>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" onclick="return confirm('Are you sure you want to update this student information on the list?')">Update</button>

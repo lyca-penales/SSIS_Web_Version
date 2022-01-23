@@ -110,6 +110,15 @@ def all_courses():
     conn.close()
     return all_courses
 
+def all_course_code():
+    conn = db.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT Course_Code FROM courses')
+    all_course_code = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return all_course_code
+
 def get_course_code(Course_Code):
     conn = db.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
